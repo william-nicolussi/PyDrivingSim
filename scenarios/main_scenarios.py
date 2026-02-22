@@ -128,9 +128,43 @@ class BasicSpeedLimit():
         super = GraphicObject("imgs/pictures/superstrada.png", 5)
         super.set_pos((100,6))
         
-class ObstacleRocks():
-    def __init__(self):
+class Scenario1():
+    def __init__(self, av):
+        # draw the background image
+        World().set_background("imgs/Scenario_1.png", bg_pos=(-1100,-1745))
+        
+        # draw the rectangle of terrain
+        segm = RoadSegment(x=0, y=0, length=6, width=100, terrain_type="asphalt")
+        segm = RoadSegment(x=33, y=46, length=60, width=8, terrain_type="asphalt")
+        segm = RoadSegment(x=66, y=0, length=6, width=100, terrain_type="asphalt")
+        segm = RoadSegment(x=99, y=-46, length=60, width=8, terrain_type="asphalt")
+        segm = RoadSegment(x=132, y=0, length=6, width=100, terrain_type="dirt")
+        segm = RoadSegment(x=165, y=46, length=60, width=8, terrain_type="asphalt")
+        
+        # draw the vehicle
+        # remove and add the vehicle to put it in the focus
+        if av.vehicle in World().obj_list:
+            World().obj_list.remove(av.vehicle)
+        World().obj_list.append(av.vehicle)
+        av.vehicle.set_pos_ang((0, -40, 1.57)) #((0,-1,0.1))
+        
+        #Initialize target
+        target = Target()
+        target.set_pos((175, 46))
+        target.set_object(av.vehicle)
+        
+        # draw the cones
+        cone = TrafficCone()
+        cone.set_pos((63.5, 10))
+        cone = TrafficCone()
+        cone.set_pos((65, 10))
+        cone = TrafficCone()
+        cone.set_pos((67, -20))
+        cone = TrafficCone()
+        cone.set_pos((68.5, -20))
+        
+        # draw the rocks
         rock = Rock()
-        rock.set_pos_size((20, -2), 2.0, 2.0)
+        rock.set_pos_size((130, -5), 2.0, 2.0)
         rock = Rock()
-        rock.set_pos_size((45, 2), 3.0, 4.0)
+        rock.set_pos_size((134, 15), 2.0, 3.0)
