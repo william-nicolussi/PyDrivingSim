@@ -1,5 +1,5 @@
 
-from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock, RoadSegment, World
+from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock, RoadSegment, World, GPS
 
 class OnlyVehicle():
     def __init__(self):
@@ -26,6 +26,7 @@ class AutonomousVehicle():
         self.vehicle = Vehicle()
         self.vehicle.set_screen_here()
         self.vehicle.set_pos_ang((0, -1, 0))
+        self.gps = GPS(self.vehicle)
 
         #Initialize the agent
         self.agent = Agent(self.vehicle)
@@ -81,6 +82,11 @@ class Scenario_BasicTL():
         trafficlight = TrafficLight()
         trafficlight.set_pos((160,-3))
         trafficlight.reset()
+        
+        # Enable this to test the coins
+        #GetTheCoins()
+        # Enable this to test the speed limit
+        #BasicSpeedLimit()
 
 class GetTheCoins():
     def __init__(self):
