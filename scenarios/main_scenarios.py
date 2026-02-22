@@ -1,5 +1,5 @@
 
-from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock
+from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock, RoadSegment, World
 
 class OnlyVehicle():
     def __init__(self):
@@ -30,11 +30,6 @@ class AutonomousVehicle():
         #Initialize the agent
         self.agent = Agent(self.vehicle)
 
-        #Initialize target
-        target = Target()
-        target.set_pos((182, -1))
-        target.set_object(self.vehicle)
-
     def update(self):
         self.agent.compute()
         action = self.agent.get_action()
@@ -47,8 +42,27 @@ class AutonomousVehicle():
 
 
 class Scenario_BasicTL():
-    def __init__(self):
+    def __init__(self, av):
     
+        # draw the background image
+        World().set_background("imgs/bg.jpeg", bg_pos=(-1100,-1745))
+    
+        # draw the rectangle of terrain
+        # (x, y) is the CENTER of the segment
+        segm = RoadSegment(x=90, y=0, length=270, width=4, terrain_type="asphalt")
+        
+        # draw the vehicle
+        # remove and add the vehicle to put it in the focus
+        if av.vehicle in World().obj_list:
+            World().obj_list.remove(av.vehicle)
+        World().obj_list.append(av.vehicle)
+        av.vehicle.set_pos_ang((0,-1,0))
+        
+        #Initialize target
+        target = Target()
+        target.set_pos((220, -1))
+        target.set_object(av.vehicle)
+        
         # draw the cones
         cone = TrafficCone()
         cone.set_pos((1.0,0))
@@ -58,10 +72,10 @@ class Scenario_BasicTL():
         cone.set_pos((1.0,-2))
         
         # draw the rocks
-        rock = Rock()
-        rock.set_pos_size((1, -5), 2.0, 2.0)
-        rock = Rock()
-        rock.set_pos_size((1, 5), 1.0, 1.0)
+        #rock = Rock()
+        #rock.set_pos_size((1, -5), 2.0, 2.0)
+        #rock = Rock()
+        #rock.set_pos_size((1, 5), 1.0, 1.0)
 
         # set pos of the TL
         trafficlight = TrafficLight()
