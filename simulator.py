@@ -18,7 +18,7 @@ class GracefulKiller:
 
 def main():
     # Enable this to draw path into m.m.TrajectoryPointIX
-    DrawPath()
+    #DrawPath()
     # Enable this to test only single vehicle
     #av = OnlyVehicle()
     av = AutonomousVehicle()
