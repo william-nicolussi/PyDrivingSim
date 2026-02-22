@@ -5,7 +5,7 @@ import math
 import signal
 
 from pydrivingsim import World
-from scenarios import BasicSpeedLimit, Scenario_BasicTL, OnlyVehicle, AutonomousVehicle, GetTheCoins, DrawPath, Scenario1
+from scenarios import BasicSpeedLimit, Scenario_BasicTL, OnlyVehicle, AutonomousVehicle, GetTheCoins, DrawPath, Scenario1, Scenario2
 
 class GracefulKiller:
   kill_now = False
@@ -26,6 +26,7 @@ def main():
     # choose the scenario
     Scenario_BasicTL(av) #straight road with the traffic light
     #Scenario1(av) #zig-zag road with no TL to test lateral control
+    #Scenario2(av) #scenario with multiple paths
 
     killer = GracefulKiller()
     while not killer.kill_now and World().loop:

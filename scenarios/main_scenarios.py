@@ -168,3 +168,54 @@ class Scenario1():
         rock.set_pos_size((130, -5), 2.0, 2.0)
         rock = Rock()
         rock.set_pos_size((134, 15), 2.0, 3.0)
+        
+class Scenario2():
+    def __init__(self, av):
+        # draw the background image
+        World().set_background("imgs/Scenario_2.png", bg_pos=(-1100,-1745))
+        
+        # draw the rectangle of terrain
+        segm = RoadSegment(x=0, y=12, length=8, width=20, terrain_type="asphalt")
+        segm = RoadSegment(x=14, y=18, length=20, width=8, terrain_type="asphalt")
+        segm = RoadSegment(x=13, y=0, length=42, width=4, terrain_type="asphalt")
+        segm = RoadSegment(x=30, y=-7, length=8, width=10, terrain_type="asphalt")
+        segm = RoadSegment(x=54, y=-10, length=40, width=4, terrain_type="asphalt")
+        segm = RoadSegment(x=78, y=-7, length=8, width=10, terrain_type="asphalt")
+        segm = RoadSegment(x=54, y=0, length=40, width=4, terrain_type="dirt")
+        segm = RoadSegment(x=134, y=0, length=120, width=4, terrain_type="asphalt")
+        segm = RoadSegment(x=162.5, y=0, length=4, width=40, terrain_type="asphalt")
+        
+        # draw the vehicle
+        # remove and add the vehicle to put it in the focus
+        if av.vehicle in World().obj_list:
+            World().obj_list.remove(av.vehicle)
+        World().obj_list.append(av.vehicle)
+        av.vehicle.set_pos_ang((14, 18, 3.14)) #((0,-1,0.1))
+        
+        #Initialize target
+        target = Target()
+        target.set_pos((182, -1))
+        target.set_object(av.vehicle)
+        
+        # draw the cones
+        cone = TrafficCone()
+        cone.set_pos((0, 0))
+        cone = TrafficCone()
+        cone.set_pos((65, -8))
+        cone = TrafficCone()
+        cone.set_pos((65, -9))
+        cone = TrafficCone()
+        cone.set_pos((90, 0.5))
+        cone = TrafficCone()
+        cone.set_pos((90, 1.5))
+
+        # draw the traffic light
+        trafficlight = TrafficLight()
+        trafficlight.set_pos((160,-3))
+        trafficlight.reset()
+        
+        # draw the rocks
+        rock = Rock()
+        rock.set_pos_size((60, -2), 2.0, 2.0)
+        rock = Rock()
+        rock.set_pos_size((45, 2), 3.0, 4.0)
