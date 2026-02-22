@@ -1,5 +1,5 @@
 
-from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock, RoadSegment, World, GPS
+from pydrivingsim import TrafficLight, Target, TrafficCone, SuggestedSpeedSignal, GraphicObject, Vehicle, Agent, Coin, Rock, RoadSegment, World, GPS, Graph
 
 class OnlyVehicle():
     def __init__(self):
@@ -41,6 +41,10 @@ class AutonomousVehicle():
     def terminate(self):
         self.agent.terminate()
 
+# draw path into m.m.TrajectoryPointIX
+class DrawPath():
+    def __init__(self):
+        self.graph = Graph()
 
 class Scenario_BasicTL():
     def __init__(self, av):
@@ -61,7 +65,7 @@ class Scenario_BasicTL():
         
         #Initialize target
         target = Target()
-        target.set_pos((220, -1))
+        target.set_pos((182, -1))
         target.set_object(av.vehicle)
         
         # draw the cones

@@ -9,7 +9,7 @@ from math import *
 import agent.agent_interfaces_connector as agent_lib
 from agent.interfaces_python_data_structs import input_data_str, output_data_str
 
-from pydrivingsim import World, Vehicle, TrafficLight, TrafficCone, Target, SuggestedSpeedSignal, Coin, Rock, RoadSegment, GPS
+from pydrivingsim import World, Vehicle, TrafficLight, TrafficCone, Target, SuggestedSpeedSignal, Coin, Rock, RoadSegment, GPS, Graph
 
 
 c = agent_lib.AgentConnector()
@@ -58,6 +58,12 @@ class Agent():
         self.ALgtFild = 0
         self.YawRateFild = 0
         self.SteerWhlAg = 0
+        
+        # find Graph in the world
+        for obj in World().obj_list:
+            if isinstance(obj, Graph):
+                self.graph = obj
+                break
 
     def compute(self):
         self.num_of_step += 1
@@ -233,6 +239,21 @@ class Agent():
 
         #self.action = (0.01, 0.01)
         self.action = (m.RequestedAcc,m.RequestedSteerWhlAg)
+        
+        # Save values from manoeuvre_msg into the Graph class
+        if hasattr(self, "graph") and self.graph is not None:
+            if m.NTrajectoryPoints > 0:
+                #print("Received points: " + str(m.NTrajectoryPoints))
+                points_world = []
+                for i in range(m.NTrajectoryPoints):
+                    xr = m.TrajectoryPointIX[i]
+                    yr = m.TrajectoryPointIY[i]
+                    
+                    #print("xr: " + str(xr))
+                    #print("yr: " + str(yr))
+                    points_world.append((xr, yr))
+
+                self.graph.set_points_world(points_world)
 
     def terminate(self):
         World().loop = 0
